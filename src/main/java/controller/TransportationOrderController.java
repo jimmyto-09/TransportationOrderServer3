@@ -22,44 +22,42 @@ import es.upm.dit.apsv.transportationorderserver.model.TransportationOrder;
 public class TransportationOrderController {
 
     private final TransportationOrderRepository repository;
-    private static final Logger log = LoggerFactory.getLogger(TransportationOrderController.class);
+
+    public static final Logger log = LoggerFactory.getLogger(TransportationOrderController.class);
 
     public TransportationOrderController(TransportationOrderRepository repository) {
-        this.repository = repository;
+      this.repository = repository;
     }
 
     @GetMapping("/transportationorders")
-    public List<TransportationOrder> all() {
-        return (List<TransportationOrder>) repository.findAll();
+    List<TransportationOrder> all() {
+      return (List<TransportationOrder>) repository.findAll();
     }
 
     @PostMapping("/transportationorders")
-    public TransportationOrder newOrder(@RequestBody TransportationOrder newOrder) {
-        return repository.save(newOrder);
+    TransportationOrder newOrder(@RequestBody TransportationOrder newOrder) {
+      return repository.save(newOrder);
     }
 
     @GetMapping("/transportationorders/{truck}")
-    public ResponseEntity<TransportationOrder> getByTruck(@PathVariable String truck) {
-        Optional<TransportationOrder> order = repository.findById(truck);
-        if (order.isPresent()) {
-            return new ResponseEntity<>(order.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    ResponseEntity<TransportationOrder> getByTruck(@PathVariable String truck) {
+      Optional<TransportationOrder> ot = repository.findById(truck);
+      if (ot.isPresent())
+        return new ResponseEntity<>(ot.get(), HttpStatus.OK);
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
+ 
     @PutMapping("/transportationorders")
-    public ResponseEntity<TransportationOrder> update(@RequestBody TransportationOrder updatedOrder) {
-        TransportationOrder updated = repository.save(updatedOrder);
-        if (updated == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(updated, HttpStatus.OK);
+    ResponseEntity<TransportationOrder> update(@RequestBody TransportationOrder updatedOrder) {
+      TransportationOrder to = repository.save(updatedOrder);
+      if (to == null)
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(to, HttpStatus.OK);
     }
 
     @DeleteMapping("/transportationorders/{truck}")
-    public void deleteOrder(@PathVariable String truck) {
-        repository.deleteById(truck);
-    }
-}
+    void deleteOrder(@PathVariable String truck) {
+      repository.deleteById(truck);
+    }    
 
+}
