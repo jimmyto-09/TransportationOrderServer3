@@ -1,39 +1,37 @@
-package es.upm.dit.apsv.transportationorderserver.model;
+ package es.upm.dit.apsv.transportationorderserver.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import java.util.Objects;
 
-@Entity @Getter @Setter @NoArgsConstructor @ToString
-public class TransportationOrder {  
-
-    private String toid;
-
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+public class TransportationOrder {
+   
     @Id
+    private String toid;
     private String truck;
-
-    private long originDate;
-    private double originLat;
-    private double originLong;
-    private long dstDate;
-    private double dstLat;
-    private double dstLong;
-    private long lastDate;
-    private double lastLat;
-    private double lastLong;
+    private Long originDate;
+    private Double originLat;
+    private Double originLong;
+    private Long dstDate;
+    private Double dstLat;
+    private Double dstLong;
+    private Long lastDate;
+    private Double lastLat;
+    private Double lastLong;
     private int st;
 
     // Constructor con todos los campos
-    public TransportationOrder(String toid, String truck, long originDate,
-                               double originLat, double originLong,
-                               long dstDate, double dstLat, double dstLong,
-                               long lastDate, double lastLat, double lastLong,
-                               int st) {
+    public TransportationOrder(String toid, String truck, Long originDate, Double originLat, Double originLong,
+                               Long dstDate, Double dstLat, Double dstLong, Long lastDate, Double lastLat,
+                               Double lastLong, int st) {
         this.toid = toid;
         this.truck = truck;
         this.originDate = originDate;
@@ -48,60 +46,8 @@ public class TransportationOrder {
         this.st = st;
     }
 
-    // Método para calcular la distancia al destino
+    // Método para calcular la distancia hasta el destino
     public double distanceToDestination() {
-        return Math.sqrt(Math.pow(this.dstLat - this.lastLat, 2)
-                    + Math.pow(this.dstLong - this.lastLong, 2));
+        return Math.sqrt(Math.pow(this.dstLat - this.lastLat, 2) + Math.pow(this.dstLong - this.lastLong, 2));
     }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((toid == null) ? 0 : toid.hashCode());
-        result = prime * result + ((truck == null) ? 0 : truck.hashCode());
-        result = prime * result + (int) (originDate ^ (originDate >>> 32));
-        long temp;
-        temp = Double.doubleToLongBits(originLat);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(originLong);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        result = prime * result + (int) (dstDate ^ (dstDate >>> 32));
-        temp = Double.doubleToLongBits(dstLat);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(dstLong);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        result = prime * result + (int) (lastDate ^ (lastDate >>> 32));
-        temp = Double.doubleToLongBits(lastLat);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(lastLong);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        result = prime * result + st;
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        TransportationOrder other = (TransportationOrder) obj;
-        if (toid == null) {
-            if (other.toid != null)
-                return false;
-        } else if (!toid.equals(other.toid))
-            return false;
-        if (truck == null) {
-            if (other.truck != null)
-                return false;
-        } else if (!truck.equals(other.truck))
-            return false;
-        if (originDate != other.originDate)
-            return false;
-        if (Double.doubleToLongBits(originLat) != Double.doubleToLongBits(other.originLat))
-            return false;
-        if (Double.doubleToLongBits(originLong) != Double.doubleToLongBits(other.originLong))
-            return false;…
+}
